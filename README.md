@@ -18,7 +18,7 @@ This repository contains the source code for a web application that empowers use
 Mainly Python
 
 **Getting Started:**
-We have deployed our site to the following domain :- 
+We have deployed our site to the following domain :- https://tradex1.streamlit.app/
 
 **Disclaimer:**
 
