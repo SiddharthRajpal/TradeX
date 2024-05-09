@@ -1,5 +1,9 @@
-yfinance
 streamlit
-pandas
 plotly
+datetime
+yfinance
 statsmodels
+pandas
+requests
+json
+hydralit_components
