@@ -30,12 +30,12 @@ df["MA2"] = df.Close.rolling(average2).mean()
 pred_range = 5
 
 train_df = df['Open']
-model = ARIMA(train_df, order=(5,1,0))
+model = ARIMA(train_df, order=(9,3,1))
 model = model.fit()
 open_pred = model.forecast(pred_range)
 
 train_df = df['Close']
-model = ARIMA(train_df, order=(5,1,0))
+model = ARIMA(train_df, order=(9,3,1))
 model = model.fit()
 close_pred = model.forecast(pred_range)
 
