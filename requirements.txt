@@ -5,5 +5,4 @@ yfinance
 statsmodels
 pandas
 requests
-json
 hydralit_components
