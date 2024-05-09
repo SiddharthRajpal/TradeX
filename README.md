@@ -1,4 +1,4 @@
-##  **TRADE X: Real-Time Stock Analysis with RSI Integration**
+##  **TRADE X: Real-Time Stock Analysis**
 
 This repository contains the source code for a web application that empowers users with real-time stock market analysis 
 
@@ -12,7 +12,7 @@ This repository contains the source code for a web application that empowers use
 
 * Investors of all experience levels seeking data-driven insights.
 * Day traders who value real-time analysis and technical indicators.
-* Anyone interested in learning more about the stock market and using RSI effectively.
+* Anyone interested in learning more about the stock market
 
 **Technologies:**
 Mainly Python
