@@ -11,6 +11,8 @@ import hydralit_components as hc
 #SETUP
 
 st.set_page_config("Trade X",layout="wide")
+st.title("Trade X")
+
 ticker  = st.sidebar.text_input("Symbol","NVDA")
 
 start = st.sidebar.text_input("Start Date",f"{datetime.date.today() - datetime.timedelta(183)}")
@@ -99,6 +101,17 @@ for x in range(0,Max):
 #     text= summary[0:100]+"...",
 # )
 
-hc.info_card(title=titles[0], content=summary[0], key='1')
-hc.info_card(title=titles[1], content=summary[1], key='5')
-hc.info_card(title=titles[2], content=summary[2], key='2')
+
+cc = st.columns(3)
+
+with cc[0]:
+ hc.info_card(title=titles[0][0:40]+"...", content=summary[0][0:100]+"...", key='1')
+
+with cc[1]:
+ hc.info_card(title=titles[1][0:40]+"...", content=summary[1][0:100]+"...", key='5')
+
+with cc[2]:
+ hc.info_card(title=titles[2][0:40]+"...", content=summary[2][0:100]+"...", key='2')
+
+
+
