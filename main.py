@@ -23,7 +23,7 @@ ticker  = st.sidebar.text_input("Ticker","NVDA")
 
 
 start_date = st.sidebar.text_input("Start Date","2023-5-28")
-end_date = st.sidebar.text_input("End Date",'2024-1-1')
+end_date = st.sidebar.text_input("End Date",f'{today}')
 average1 = st.sidebar.number_input("Moving Average ",value=9)
 average2 = st.sidebar.number_input("Moving Average 2", value = 20)
 b_price = st.sidebar.number_input("Shares", value = 1)
