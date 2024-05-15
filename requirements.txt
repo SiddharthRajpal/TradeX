@@ -5,4 +5,3 @@ yfinance
 statsmodels
 pandas
 requests
-hydralit_components
