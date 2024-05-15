@@ -6,7 +6,6 @@ from statsmodels.tsa.arima.model import ARIMA
 import pandas as pd
 import requests
 import json
-import hydralit_components as hc
 import streamlit.components.v1 as components
 
 #SETUP
