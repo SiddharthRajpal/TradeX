@@ -78,29 +78,47 @@ pred = pd.DataFrame({'open':open_pred.values, 'timestamp':i, 'close':close_pred.
 
 #ARIMA ENDS
 
+#RSI
+
+RSI_deltas = df["Close"].diff(1)
+RSI_deltas.dropna(inplace=True)
+positive = RSI_deltas.copy()
+negative = RSI_deltas.copy()
+positive[positive < 0] = 0
+negative[negative > 0] = 0
+RSI_timeframe = st.sidebar.slider("Relative Strength Index", 0,25, value=14)
+avg_gain = positive.rolling(RSI_timeframe).mean()
+avg_loss = abs(negative.rolling(RSI_timeframe).mean())
+RS = avg_gain/avg_loss
+RSI = 100.0 - (100.0/(1.0+RS))
+
 #PLOTTING 
 
 fig = go.Figure(data=[
     go.Candlestick(x=pred['timestamp'], open=pred['open'], close=pred['close'], high=pred['open'],low=pred['close'], increasing_line_color='cyan', decreasing_line_color='orange', name='Prediction', yaxis='y2'),
     go.Candlestick(x=df.index, open = df.Open, close=df.Close, high=df.High, low=df.Low, name=ticker, yaxis="y2", decreasing_line_color='#f23645', increasing_line_color='#089981'),
     go.Bar(x = df.index, y = df['Volume'], yaxis="y3", name="Volume", marker={'color': "#089981"}),
-    go.Scatter(x = df.index, y = df['MA1'], line = dict(color='#4c3b75'), name = 'MA1',yaxis="y2", visible= True if average1!=0 else False),
-    go.Scatter(x = df.index, y = df['MA2'], line = dict(color='#d3c43a'), name = 'MA2',yaxis="y2", visible= True if average2!=0 else False),
+    go.Scatter(x = df.index, y = df['MA1'], line = dict(color='#4c3b75'), name = 'MA1',yaxis="y2", visible= True if average1 !=0 else False),
+    go.Scatter(x = df.index, y = df['MA2'], line = dict(color='#d3c43a'), name = 'MA2',yaxis="y2", visible= True if average2 !=0 else False),
+    go.Scatter(x = df.index, y = RSI.values, line = dict(color='#d21b5e'), name = 'RSI',yaxis="y4", visible= True if RSI_timeframe !=0 else False),
 ],
 
 layout = go.Layout(
     yaxis=dict(
-        domain=[0.2,1],
+        domain=[0.35,1],
     ),
     yaxis2=dict(
-        domain=[0.2,1]
+        domain=[0.35,1]
     ),
     yaxis3=dict(
-        domain=[0,0.2]
-    )
+        domain=[0.17,0.34]
+    ),
+    yaxis4=dict(
+        domain=[0,0.17]
+    ),
 ))
 
-fig.update_layout(autosize = True,height = 850, xaxis_rangeslider_visible=False)
+fig.update_layout(autosize = True,height = 1000, xaxis_rangeslider_visible=False)
 
 st.plotly_chart(fig,use_container_width=True)
 
