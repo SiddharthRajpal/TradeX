@@ -42,7 +42,7 @@ st.markdown(
 
 ticker  = st.sidebar.text_input("Symbol","NVDA")
 
-start = st.sidebar.text_input("Start Date",f"{datetime.date.today() - datetime.timedelta(183)}")
+start = st.sidebar.text_input("Start Date",f"{datetime.date.today() - datetime.timedelta(150)}")
 end = datetime.date.today()
 
 average1 = st.sidebar.slider("Moving Average 1", 0,50, value=20)
@@ -92,6 +92,13 @@ avg_loss = abs(negative.rolling(RSI_timeframe).mean())
 RS = avg_gain/avg_loss
 RSI = 100.0 - (100.0/(1.0+RS))
 
+#MACD
+
+ema12 = df['Close'].ewm(span=12, adjust=False).mean()
+ema26 = df['Close'].ewm(span=26, adjust=False).mean()
+df['MACD'] = ema12 - ema26
+df['Signal'] = df['MACD'].ewm(span=9, adjust=False).mean()
+
 #PLOTTING 
 
 fig = go.Figure(data=[
@@ -101,29 +108,39 @@ fig = go.Figure(data=[
     go.Scatter(x = df.index, y = df['MA1'], line = dict(color='#4c3b75'), name = 'MA1',yaxis="y2", visible= True if average1 !=0 else False),
     go.Scatter(x = df.index, y = df['MA2'], line = dict(color='#d3c43a'), name = 'MA2',yaxis="y2", visible= True if average2 !=0 else False),
     go.Scatter(x = df.index, y = RSI.values, line = dict(color='#d21b5e'), name = 'RSI',yaxis="y4", visible= True if RSI_timeframe !=0 else False),
+    go.Scatter(x = df.index, y = df['MACD'], line = dict(color='#ee8531'), name = 'MACD',yaxis="y5"),
+    go.Scatter(x = df.index, y = df['Signal'], line = dict(color='#839322'), name = 'SIGNAL',yaxis="y5"),
 ],
 
 layout = go.Layout(
     yaxis=dict(
-        domain=[0.35,1],
+        domain=[0.4,1],
     ),
     yaxis2=dict(
-        domain=[0.35,1]
+        domain=[0.4,1]
     ),
     yaxis3=dict(
-        domain=[0.17,0.34]
+        domain=[0.3,0.4]
     ),
     yaxis4=dict(
-        domain=[0,0.17]
+        domain=[0.15,0.29]
+    ),
+    yaxis5=dict(
+        domain=[0.0,0.15]
     ),
 ))
 
-fig.update_layout(autosize = True,height = 1000, xaxis_rangeslider_visible=False)
+fig.update_layout(autosize = True,height = 1200, xaxis_rangeslider_visible=False)
 
 st.plotly_chart(fig,use_container_width=True)
 
 
+
 #NEWS
+
+
+st.divider()
+
 titles = []
 links = []
 summary = []
